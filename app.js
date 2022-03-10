@@ -1,13 +1,16 @@
-//Query Selectors
-const letters = document.querySelectorAll(".letter-box");
+//Variables
+let currentRow = 0;
 let space = 0;
 let letterCount = 0;
+
+//Query Selectors
+const words = document.querySelectorAll(".word-wrapper");
+let letters = words[currentRow].querySelectorAll(".letter-box");
 
 //Game
 let userInput = [];
 let word = "heads".toUpperCase();
 word = [...word];
-console.log(word);
 
 window.addEventListener("keydown", (e) => {
     
@@ -77,7 +80,12 @@ window.addEventListener("keydown", (e) => {
                     locationIterator+=1;
                 }
 
-                console.log(locations);
+                //Next Row
+                currentRow+=1;
+                letters = words[currentRow].querySelectorAll(".letter-box");
+                letterCount = 0;
+                space = 0;
+                console.log(letters);
             }
         }
     }
