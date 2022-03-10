@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: flex;
+    height: 100vh;
+    background: rgb(22, 22, 22);
+    color: white;
+}
+
+.wrapper{
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.word-wrapper{
+    display: flex;
+    gap: .5rem;
+}
+
+.letter-box{
+    display: flex;
+    border: 2px solid rgb(88, 88, 88);
+    max-height: 3rem;
+    max-width: 3rem;
+    min-height: 3rem;
+    min-width: 3rem;
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.active{
+    border: 2px solid rgb(141, 141, 141);
+}
