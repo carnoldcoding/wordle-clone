@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container{
@@ -25,7 +28,7 @@
 
 .letter-box{
     display: flex;
-    border: 2px solid rgb(88, 88, 88);
+    border: 2px solid rgb(61, 61, 61);
     max-height: 3rem;
     max-width: 3rem;
     min-height: 3rem;
@@ -35,6 +38,19 @@
     align-items: center;
 }
 
-.active{
-    border: 2px solid rgb(141, 141, 141);
+@keyframes bounce {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
+
+.active{
+    border: 2px solid rgb(92, 92, 92);
+    animation: bounce .2s ease;
+};
