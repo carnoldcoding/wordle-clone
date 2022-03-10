@@ -119,7 +119,17 @@
     background: rgb(102, 102, 102);
 }
 
+@keyframes slideUp {
+    0%{
+        opacity: 0;
+        transform: translateY(10vh);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 .visible{
     display: flex;
-    opacity: 1;
+    animation: slideUp 1s ease forwards;
 }

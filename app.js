@@ -12,9 +12,9 @@ const modal = document.querySelector(".modal-wrapper");
 const modalButton = document.querySelector(".modal-button");
 const modalHeader = document.querySelector(".modal-header");
 
-//Game
+//Read From Text File
 let userInput = [];
-let word = "stink".toUpperCase();
+let word = "heads".toUpperCase();
 word = [...word];
 
 //Modal
