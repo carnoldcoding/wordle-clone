@@ -3,15 +3,36 @@ let currentRow = 0;
 let space = 0;
 let letterCount = 0;
 
-//Query Selectors
+//Game Selectors
 const words = document.querySelectorAll(".word-wrapper");
 let letters = words[currentRow].querySelectorAll(".letter-box");
 
+//Modal Selectors
+const modal = document.querySelector(".modal-wrapper");
+const modalButton = document.querySelector(".modal-button");
+const modalHeader = document.querySelector(".modal-header");
+
 //Game
 let userInput = [];
-let word = "heads".toUpperCase();
+let word = "stink".toUpperCase();
 word = [...word];
 
+//Modal
+modalButton.addEventListener("click", ()=>{
+    modal.classList.toggle("visible");
+
+    //Reset Game
+    for(w of words){
+        for(letter of w.childNodes){
+            letter.className="letter-box";
+            letter.textContent="";
+            currentRow = 0;
+            letters = words[currentRow].querySelectorAll(".letter-box");
+        }
+    }
+});
+
+//Text
 window.addEventListener("keydown", (e) => {
     
     if((e.key >= "a" && e.key <="z") || e.key == "Backspace" || e.key == "Enter"){
@@ -78,6 +99,18 @@ window.addEventListener("keydown", (e) => {
                         letter.classList.toggle("black");
                     }
                     locationIterator+=1;
+                }
+
+                //Win Condition
+                if(!(locations.includes("y") || locations.includes("b"))){
+                    modal.classList.toggle("visible");
+                    modalHeader.textContent = "Congratulations!";
+                }
+
+                //Lose Condition
+                if(currentRow==5 && (locations.includes("y") || locations.includes("b"))){
+                    modal.classList.toggle("visible");
+                    modalHeader.textContent = "You Lose.";
                 }
 
                 //Next Row
