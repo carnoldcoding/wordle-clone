@@ -58,6 +58,25 @@ window.addEventListener("keydown", (e) => {
                         locations.push("b");
                     }
                 }
+                //Make changes to DOM
+                locationIterator = 0;
+                for(letter of letters){
+                    console.log(letter);
+                    if(locations[locationIterator] == "g"){
+                        letter.classList.toggle("active");
+                        letter.classList.toggle("green");
+                    }
+                    else if(locations[locationIterator] == "y"){
+                        letter.classList.toggle("active");
+                        letter.classList.toggle("yellow");
+                    }
+                    else{
+                        letter.classList.toggle("active");
+                        letter.classList.toggle("black");
+                    }
+                    locationIterator+=1;
+                }
+
                 console.log(locations);
             }
         }
