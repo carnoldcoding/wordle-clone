@@ -60,7 +60,7 @@ window.addEventListener("keydown", (e) => {
         //Handle submitting the word
         else if(e.key == "Enter"){
             if(letterCount < 5){
-                console.log("This is not a word");
+                alert("This is not a word");
             }
             else{
                 //Make array of userInput
@@ -71,11 +71,18 @@ window.addEventListener("keydown", (e) => {
 
                 //Find the green, yellow, and blacks
                 let locations = []
-                for(letter of userWord){
+                for(let x = 0; x < 5; x++){
+                    console.log(`
+                    userWord: ${userWord}
+                    word: ${word}
+                    letter: ${userWord[x]}
+                    position in word: ${word.indexOf(userInput[x].toUpperCase())}
+                    position in UI: ${x}
+                    `)
                     //Check if letter is in word
-                    if(word.includes(letter)){
+                    if(word.includes(userWord[x])){
                         //Check if its an exact match
-                        if(word.indexOf(letter)==userWord.indexOf(letter)){
+                        if(word[x]==userWord[x]){
                             locations.push("g");
                         }else{
                             locations.push("y");
@@ -87,7 +94,6 @@ window.addEventListener("keydown", (e) => {
                 //Make changes to DOM
                 locationIterator = 0;
                 for(letter of letters){
-                    console.log(letter);
                     if(locations[locationIterator] == "g"){
                         letter.classList.toggle("active");
                         letter.classList.toggle("green");
@@ -120,7 +126,6 @@ window.addEventListener("keydown", (e) => {
                 letters = words[currentRow].querySelectorAll(".letter-box");
                 letterCount = 0;
                 space = 0;
-                console.log(letters);
             }
         }
     }
