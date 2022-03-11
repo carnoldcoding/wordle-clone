@@ -24,6 +24,10 @@ modalButton.addEventListener("click", ()=>{
     modal.classList.toggle("visible");
 
     //Reset Game
+    randInt = Math.floor(Math.random() * 2000);
+    word = data[randInt].toUpperCase();
+    word = [...word];
+    console.log(word);
     for(w of words){
         for(letter of w.childNodes){
             letter.className="letter-box";
