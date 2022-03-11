@@ -99,6 +99,8 @@
     width: 20vw;
 
     border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
 }
 
 .modal-header{
@@ -116,7 +118,7 @@
 .modal-button:hover{
     cursor: pointer;
     transform: scale(1.05);
-    background: rgb(102, 102, 102);
+    background: rgb(49, 46, 46);
 }
 
 @keyframes slideUp {

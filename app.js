@@ -122,7 +122,7 @@ window.addEventListener("keydown", (e) => {
                 //Lose Condition
                 if(currentRow==5 && (locations.includes("y") || locations.includes("b"))){
                     modal.classList.toggle("visible");
-                    modalHeader.textContent = "You Lose.";
+                    modalHeader.textContent = `The word was: ${word.join('').toLowerCase()}`;
                 }
 
                 //Next Row
