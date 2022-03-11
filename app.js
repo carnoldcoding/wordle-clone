@@ -12,10 +12,12 @@ const modal = document.querySelector(".modal-wrapper");
 const modalButton = document.querySelector(".modal-button");
 const modalHeader = document.querySelector(".modal-header");
 
-//Read From Text File
+//Randomize Input
 let userInput = [];
-let word = "heads".toUpperCase();
+let randInt = Math.floor(Math.random() * 2000);
+let word = data[randInt].toUpperCase();
 word = [...word];
+console.log(word);
 
 //Modal
 modalButton.addEventListener("click", ()=>{
