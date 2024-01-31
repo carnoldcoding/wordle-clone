@@ -43,6 +43,15 @@ body{
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                &.correct{
+                    background: #6aaa64;
+                }
+                &.close{
+                    background: rgb(220, 204, 61);
+                }
+                &.incorrect{
+                    background: #333;
+                }
             }
         }
     }

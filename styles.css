@@ -43,5 +43,14 @@ body .wordle-container section div {
   align-items: center;
   justify-content: center;
 }
+body .wordle-container section div.correct {
+  background: #6aaa64;
+}
+body .wordle-container section div.close {
+  background: rgb(220, 204, 61);
+}
+body .wordle-container section div.incorrect {
+  background: #333;
+}
 
 /*# sourceMappingURL=styles.css.map */

@@ -6,5 +6,9 @@ export const grid = {
 export const player = {
     currentGuess: "",
     currentRow: 0,
-    currentCol: 0
+    currentCol: 0,
+    lost: false,
+    won: false
 }
+
+export const word = "bleed";
