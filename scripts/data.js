@@ -11,4 +11,4 @@ export const player = {
     won: false
 }
 
-export const word = "bleed";
+export const word = "spoil";

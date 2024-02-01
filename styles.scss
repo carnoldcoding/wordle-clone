@@ -22,6 +22,46 @@ body{
             }
         }
     }
+    .keyboard-container{
+        margin-top: 50px;
+        margin-bottom: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        .keyboard{
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 500px;
+            justify-content: center;
+            gap: clamp(.1rem, 1vw, .5rem);
+            position: relative;
+            .row{
+                display: flex;
+                gap: clamp(.1rem, 1vw, .5rem);
+               
+                section{
+                    height: clamp(35px, 10vw, 50px);
+                    width: clamp(25px, 8vw, 40px);
+                    font-size: clamp(10px, 3vw, 16px);
+                    color: white;
+                    font-family: "inter", sans-serif;
+                    text-transform: uppercase;
+                    background: $grey;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 5px;
+                    user-select: none;
+                    &:active{
+                        filter: brightness(80%);
+                    }
+                }
+            }
+            
+        }
+    }
     .wordle-container{
         width: 100%;
         display: flex;
@@ -33,8 +73,8 @@ body{
             display: flex;
             gap: 5px;
             div{
-                height: 65px;
-                width: 65px;
+                height: clamp(50px, 10vw, 65px);
+                width: clamp(50px, 10vw, 65px);
                 border: 2px solid $grey;
                 color: white;
                 font-family: "Inter", sans-serif;
