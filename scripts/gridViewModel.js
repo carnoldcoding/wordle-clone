@@ -25,7 +25,26 @@ const submitGuess = () =>{
                 guessDOM[i].classList.add('correct');
                 correct += 1;
             }else if(wordArr.includes(guessArr[i])){
-                guessDOM[i].classList.add('close');
+                let wordLetterCount = 0;
+                let guessLetterCount = 0;
+
+                wordArr.forEach(letter =>{
+                    if(letter == guessArr[i]){
+                        wordLetterCount += 1;
+                    }
+                })
+
+                guessArr.forEach(letter => {
+                    if(letter == guessArr[i]){
+                        guessLetterCount += 1;
+                    }
+                })
+
+                if(wordLetterCount > guessLetterCount){
+                    guessDOM[i].classList.add('close');
+                }else{
+                    guessDOM[i].classList.add('incorrect');
+                }
             }else{
                 guessDOM[i].classList.add('incorrect');
             }
