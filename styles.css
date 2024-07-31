@@ -57,6 +57,71 @@ body .keyboard-container .keyboard .row section {
 body .keyboard-container .keyboard .row section:active {
   filter: brightness(80%);
 }
+body .keyboard-container .keyboard .row section.enter {
+  width: auto;
+  padding: 10px;
+}
+body .keyboard-container .keyboard .row section.backspace {
+  font-size: clamp(15px, 5vw, 25px);
+}
+body .modal-container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+body .modal-container.hidden {
+  display: none;
+}
+body .modal-container .modal-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+  height: 400px;
+  width: clamp(320px, 60vw, 500px);
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.233);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+body .modal-container .modal-wrapper header {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+body .modal-container .modal-wrapper header h1 {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+body .modal-container .modal-wrapper header h3 {
+  color: rgb(201, 201, 201);
+  font-weight: 300;
+}
+body .modal-container .modal-wrapper button {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  font-size: 15px;
+  padding: 15px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+body .modal-container .modal-wrapper button:hover {
+  cursor: pointer;
+}
 body .wordle-container {
   width: 100%;
   display: flex;
@@ -80,18 +145,22 @@ body .wordle-container section div {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 body .wordle-container section div.filled {
   border: 2px solid rgb(117, 117, 117);
 }
 body .wordle-container section div.correct {
   background: #6aaa64;
+  border-color: #6aaa64;
 }
 body .wordle-container section div.close {
   background: rgb(220, 204, 61);
+  border-color: rgb(220, 204, 61);
 }
 body .wordle-container section div.incorrect {
   background: #333;
+  border-color: #333;
 }
 
 /*# sourceMappingURL=styles.css.map */

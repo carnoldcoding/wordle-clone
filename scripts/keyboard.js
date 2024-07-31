@@ -1,4 +1,4 @@
-export const createKeyboard = () => {
+const createKeyboard = () => {
     const container = document.querySelector('aside');
     const qwerty = [Array.from('qwertyuiop'),Array.from('asdfghjkl'),['ent', 'z','x','c', 'v', 'b', 'n', 'm', 'del']];
     let keyboardHTML = '';
@@ -9,9 +9,9 @@ export const createKeyboard = () => {
             if(letter != 'ent' && letter != 'del'){
                 rowHTML += `<section data-key=${letter}>${letter}</section>`
             }else if(letter=='ent'){
-                rowHTML += `<section data-key="enter">${letter}</section>`
+                rowHTML += `<section class="enter" data-key="enter">enter</section>`
             }else if(letter=='del'){
-                rowHTML += `<section data-key="backspace">${letter}</section>`
+                rowHTML += `<section class="backspace" data-key="backspace"><ion-icon name="backspace-outline"></ion-icon></section>`
             }
         });
         rowHTML += '</div>'
@@ -21,7 +21,8 @@ export const createKeyboard = () => {
     container.innerHTML = keyboardHTML;
 }
 
-export const simulateKeyboard = () =>{
+export const mountKeyboard = () =>{
+    createKeyboard();
     // Function to simulate a keypress
     function simulateKeyPress(key) {
         const event = new KeyboardEvent('keyup', { key });

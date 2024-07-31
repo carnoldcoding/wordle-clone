@@ -57,9 +57,74 @@ body{
                     &:active{
                         filter: brightness(80%);
                     }
+                    &.enter{
+                        width: auto;
+                        padding: 10px;
+                    }
+                    &.backspace{
+                        font-size: clamp(15px, 5vw, 25px);
+                    }
                 }
             }
             
+        }
+    }
+    .modal-container{
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        background: rgba(0,0,0,.5);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        &.hidden{
+            display: none;
+        }
+        .modal-wrapper{
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translate(-50%, 50%);
+            height: 400px;
+            width: clamp(320px, 60vw, 500px);
+            background: rgba(0,0,0,.8);
+            box-shadow: 0px 0px 10px rgba(0,0,0, .7);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.233);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            header{
+                text-align: center;
+                font-family: "Inter", sans-serif;
+                h1{
+                    color: white;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    margin-bottom: 10px;
+                }
+                h3{
+                    color: rgb(201, 201, 201);
+                    font-weight: 300;
+                }
+            }
+            button{
+                border: 1px solid white;
+                background: transparent;
+                color: white;
+                font-size: 15px;
+                padding: 15px;
+                border-radius: 5px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                font-weight: 500;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
         }
     }
     .wordle-container{
@@ -83,18 +148,22 @@ body{
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                position: relative;
 
                 &.filled{
                     border: 2px solid rgb(117, 117, 117);
                 }
                 &.correct{
                     background: #6aaa64;
+                    border-color: #6aaa64;
                 }
                 &.close{
                     background: rgb(220, 204, 61);
+                    border-color: rgb(220, 204, 61);
                 }
                 &.incorrect{
                     background: #333;
+                    border-color: #333;
                 }
             }
         }
