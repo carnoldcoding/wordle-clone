@@ -54,6 +54,20 @@ body{
                     align-items: center;
                     border-radius: 5px;
                     user-select: none;
+
+                    &.correct{
+                        background: #6aaa64;
+                        border-color: #6aaa64;
+                    }
+                    &.close{
+                        background: rgb(220, 204, 61);
+                        border-color: rgb(220, 204, 61);
+                    }
+                    &.incorrect{
+                        background: #333;
+                        border-color: #333;
+                    }
+                    
                     &:active{
                         filter: brightness(80%);
                     }

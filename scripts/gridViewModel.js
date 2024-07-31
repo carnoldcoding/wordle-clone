@@ -3,6 +3,7 @@ import { isValid } from "./utils.js";
 import { words } from "./data.js";
 import { getRandomInt } from "./utils.js";
 import { flipAnimation, shakeAnimation, bounceAnimation} from "./animations.js";
+import { colorKeys, clearKeys } from "./keyboard.js";
 
 
 const getWord = function(){
@@ -49,8 +50,7 @@ const submitGuess = () =>{
                 guessDOM[i].dataset.eval = 'incorrect';
             }
         }
-
-        
+        colorKeys();
 
         //Animate
         flipAnimation(guessDOM);
@@ -100,6 +100,7 @@ const replay = function(){
     toggleModal();
     mount();
     clearGrid();
+    clearKeys();
     word = getWord();
 }
 

@@ -21,6 +21,34 @@ const createKeyboard = () => {
     container.innerHTML = keyboardHTML;
 }
 
+export const colorKeys = () =>{
+    const keys = document.querySelectorAll('aside > div > section');
+    const inputLetters = document.querySelectorAll('article > section > .dirty');
+    const keyColorMap = {};
+
+    inputLetters.forEach(letter =>{
+        console.log(letter.dataset.eval, letter.textContent);
+        keyColorMap[letter.textContent] = letter.dataset.eval; 
+    })
+    console.log(keyColorMap);
+    keys.forEach(key =>{
+        if(keyColorMap.hasOwnProperty(key.textContent)){
+            key.classList.add(keyColorMap[key.textContent]);
+        }
+    });
+}
+
+export const clearKeys = () =>{
+    const keys = document.querySelectorAll('aside > div > section');
+    keys.forEach(key => {
+        Array.from(key.classList).forEach(cls => {
+            if (cls == "correct" || cls == "close" || cls=="incorrect"){
+                key.classList.remove(cls);
+            }
+        })
+    })
+}
+
 export const mountKeyboard = () =>{
     createKeyboard();
     // Function to simulate a keypress
