@@ -1,5 +1,9 @@
-import { player, word } from "./data.js";
+import { player } from "./data.js";
 import { isValid } from "./utils.js";
+import { getWord } from "./wordAPI.js";
+
+const word = await getWord();
+console.log(word); //Debugging
 
 export const createGrid = (rows, cols) => {
     const container = document.querySelector('article');
@@ -16,7 +20,7 @@ export const createGrid = (rows, cols) => {
     container.innerHTML = gridHTML;
 }
 
-const handleSubmit = (currentRow) =>{
+const handleSubmit = (currentRow) =>{    
     const guessSplit = player.currentGuess.split('');
     const wordSplit = word.split('');
     const guessDOM = Array.from(currentRow.querySelectorAll('div'));
@@ -47,15 +51,32 @@ const handleSubmit = (currentRow) =>{
 
     //Determine win condition based on result, and disable user inputs.
     if(result === 10){
-        player.won = true;
-        alert("You won");
+        handleWin();
     }
 
     //Determine lose condition
     if(player.currentRow === 6 && result != 10){
-        player.lost = true;
-        alert("You lost");
+        handleLoss();
     }
+}
+
+const handleWin = function(){
+    player.won = true;
+    alert("You won!");
+}
+
+const handleLoss = function(){
+    player.lost = true;
+    alert("You lost");
+}
+
+const bounceAnimation = function(element){
+  element.style.transition = 'transform 0.1s ease';
+  element.style.transform = 'scale(1.1)';
+
+  setTimeout(() => {
+    element.style.transform = 'scale(1)';
+  }, 100);
 }
 
 //Handle Input Logic
@@ -69,10 +90,14 @@ export const handleInput = (e) =>{
         if (player.currentCol < 5 && value != 'backspace' && value != 'enter') {
             player.currentGuess += value;
             currentCol.textContent = value;
+            currentCol.classList.add('filled');
+            bounceAnimation(currentCol);
             player.currentCol += 1;
         }else if(value === 'backspace' && player.currentCol > 0){
             //Delete last input, unless no more inputs to delete
-            currentRow.querySelector(`div[class="col-${player.currentCol-1}"]`).textContent='';
+            const cell = currentRow.querySelector(`div[class="col-${player.currentCol-1} filled"]`)
+            cell.textContent='';
+            cell.classList.remove('filled');
             player.currentGuess = player.currentGuess.slice(0, -1);
             player.currentCol -= 1;
             //Handle Submitting the guess

@@ -10,5 +10,3 @@ export const player = {
     lost: false,
     won: false
 }
-
-export const word = "spoil";
