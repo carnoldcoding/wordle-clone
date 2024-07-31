@@ -27,10 +27,8 @@ export const colorKeys = () =>{
     const keyColorMap = {};
 
     inputLetters.forEach(letter =>{
-        console.log(letter.dataset.eval, letter.textContent);
         keyColorMap[letter.textContent] = letter.dataset.eval; 
     })
-    console.log(keyColorMap);
     keys.forEach(key =>{
         if(keyColorMap.hasOwnProperty(key.textContent)){
             key.classList.add(keyColorMap[key.textContent]);
