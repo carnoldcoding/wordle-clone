@@ -4,8 +4,14 @@ import { words } from "./data.js";
 import { getRandomInt } from "./utils.js";
 import { flipAnimation, shakeAnimation, bounceAnimation} from "./animations.js";
 
-const word = words[getRandomInt(words.length)]
-console.log(word); //Debugging
+
+const getWord = function(){
+    const newWord = words[getRandomInt(words.length)];
+    console.log(newWord);
+    return newWord
+}
+
+let word = getWord();
 
 const submitGuess = () =>{    
     if(player.guess.length == 5){
@@ -26,13 +32,7 @@ const submitGuess = () =>{
         }
 
         //Ending Conditions
-        if(correct == 5){
-            player.won = true;
-            handleEnd();
-        } else if(player.currentRow == 5 && correct != 5){
-            player.won = false;
-            handleEnd();
-        }
+        handleEnd(correct);
 
         //Iterate
         player.nextRow();
@@ -44,16 +44,47 @@ const submitGuess = () =>{
 
 const toggleModal = function(){
     const modal = document.querySelector('.modal-container');
+    const title = modal.querySelector('header > h1');
+    const subtitle = modal.querySelector('header > h3');
+    if(player.won){
+        title.textContent = "you won!";
+        subtitle.textContent = `You won in ${player.currentRow + 1} guesses!`;
+    }else{
+        title.textContent = "you lose.";
+        subtitle.textContent = "Better luck next time.";
+    }
     modal.classList.toggle('hidden');
 }
 
-const handleEnd = function(){
-    unmount();
-    if(player.won){
-        alert("You won!");
-    }else{
-        alert("You lost!");
+const handleEnd = function(correct){
+    if(correct == 5){
+        player.won = true;
+        toggleModal();
+        unmount();
+    }else if (player.currentRow == 5 && correct != 5){
+        player.won = false;
+        toggleModal();
+        unmount();
     }
+}
+
+const replay = function(){
+    player.reset();
+    toggleModal();
+    mount();
+    clearGrid();
+    word = getWord();
+}
+
+const clearGrid = function(){
+    document.querySelectorAll("section > div").forEach(element =>{
+        Array.from(element.classList).forEach(cls => {
+            if (cls == "correct" || cls == "dirty" || cls == "close" || cls=="incorrect"){
+                element.classList.remove(cls);
+            }
+        })
+        element.textContent = "";
+    })
 }
 
 const placeLetter = function(letter){
@@ -96,7 +127,9 @@ export const handleInput = (e) =>{
 
 //Mount & Unmount
 export const mount = function(){
+    document.querySelector('.modal-wrapper > button').addEventListener('click', replay);
     window.addEventListener("keyup", handleInput);
+    
 }
 const unmount = function(){
     window.removeEventListener('keyup', handleInput);
