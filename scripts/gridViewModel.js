@@ -14,7 +14,7 @@ const getWord = function(){
 let word = getWord();
 
 const submitGuess = () =>{    
-    if(player.guess.length == 5){
+    if(player.guess.length == 5 && words.includes(player.guess)){
         const guessArr = player.guess.split('');
         const wordArr = word.split('');
         const guessDOM = Array.from(document.querySelectorAll(`.row-${player.currentRow} > div`));
@@ -22,7 +22,7 @@ const submitGuess = () =>{
 
         for(let i = 0; i < 5 ; i++){
             if(wordArr[i] === guessArr[i]){
-                guessDOM[i].classList.add('correct');
+                guessDOM[i].dataset.eval = 'correct';
                 correct += 1;
             }else if(wordArr.includes(guessArr[i])){
                 let wordLetterCount = 0;
@@ -41,21 +41,29 @@ const submitGuess = () =>{
                 })
 
                 if(wordLetterCount > guessLetterCount){
-                    guessDOM[i].classList.add('close');
+                    guessDOM[i].dataset.eval = 'close';
                 }else{
-                    guessDOM[i].classList.add('incorrect');
+                    guessDOM[i].dataset.eval = 'incorrect';
                 }
             }else{
-                guessDOM[i].classList.add('incorrect');
+                guessDOM[i].dataset.eval = 'incorrect';
             }
         }
 
-        //Ending Conditions
-        handleEnd(correct);
+        
 
-        //Iterate
-        player.nextRow();
-    }else{
+        //Animate
+        flipAnimation(guessDOM);
+
+        setTimeout(()=>{
+            //Ending Conditions
+            handleEnd(correct);
+
+            //Iterate if not end
+            player.nextRow();
+        }, Array.from(guessDOM).length * 250)
+       
+    }else {
         shakeAnimation(document.querySelector(`.row-${player.currentRow}`));
     }
 }
@@ -102,16 +110,21 @@ const clearGrid = function(){
                 element.classList.remove(cls);
             }
         })
-        element.textContent = "";
+        const span = element.querySelector('span');
+        span.textContent = "";
+        element.style = "";
+        span.style =  "";
     })
 }
 
 const placeLetter = function(letter){
     const currentCell = document.querySelector('section > div:not(.dirty)');
+    const currentLetter = currentCell.querySelector('span');
+    bounceAnimation(currentCell);
     if(currentCell && player.guess.length < 5){
         player.guess += letter;
         player.currentCol = player.guess.length - 1;
-        currentCell.textContent = letter;
+        currentLetter.textContent = letter;
         currentCell.classList.add('dirty');
     }
 }
@@ -120,7 +133,8 @@ const placeLetter = function(letter){
 const removeLetter = () =>{
     if(player.guess.length > 0){
         const currentCell = document.querySelector(`section[class="row-${player.currentRow}"] > .col-${player.currentCol}`);
-        currentCell.textContent = "";
+        const currentLetter = currentCell.querySelector('span');
+        currentLetter.textContent = "";
         currentCell.classList.remove('dirty');
         player.guess = player.guess.substring(0, player.guess.length - 1);
         player.currentCol = player.guess.length - 1;

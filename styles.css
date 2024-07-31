@@ -146,6 +146,7 @@ body .wordle-container section div {
   align-items: center;
   justify-content: center;
   position: relative;
+  background: transparent;
 }
 body .wordle-container section div.filled {
   border: 2px solid rgb(117, 117, 117);

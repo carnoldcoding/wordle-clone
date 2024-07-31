@@ -5,7 +5,7 @@ export const createGrid = (rows, cols) => {
     for(let i = 0; i < rows; i++){
         gridHTML += `<section class="row-${i}">`;
         for(let j = 0; j < cols; j++){
-            gridHTML += `<div class="col-${j}"></div>`
+            gridHTML += `<div class="col-${j}"><span></span></div>`
         }
         gridHTML += `</section>`;
     }

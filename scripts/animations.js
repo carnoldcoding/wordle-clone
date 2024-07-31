@@ -7,14 +7,28 @@ export const bounceAnimation = function(element){
     }, 100);
   }
 
-export const flipAnimation = function(element){
-    const span = element.querySelector('span');
-    element.style.transition = `transform .8s ease`;
-    element.style.transformStyle = 'preserve-3d';
-    element.style.perspective = '1000px';
-    element.style.transform = 'rotateX(180deg)';
+export const flipAnimation = function(elementList){
 
-    span.style.transform = 'rotateX(180deg)';
+  elementList.forEach((element, index) =>{
+    setTimeout(()=>{
+      
+      const span = element.querySelector('span');
+      element.style.transition = `all .8s ease`;
+      element.style.transformStyle = 'preserve-3d';
+      element.style.perspective = '1000px';
+      element.style.transform = 'rotateX(180deg)';
+  
+      span.style.transform = 'rotateX(180deg)';
+
+      if(element.dataset.eval == "correct"){
+        element.classList.add('correct');
+      }else if(element.dataset.eval == "close"){
+        element.classList.add('close');
+      }else if(element.dataset.eval == "incorrect"){
+        element.classList.add('incorrect');
+      }
+    }, index * 100);
+  })
 }
 
 export const shakeAnimation = function(element){
