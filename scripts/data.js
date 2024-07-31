@@ -20,7 +20,7 @@ export const player = {
     }
 }
 
-export const fiveLetterWords = [
+export const words = [
     'apple', 'brave', 'charm', 'dance', 'eagle', 'fable', 'grape', 'happy', 'ivory', 'joker',
     'knife', 'lemon', 'mango', 'night', 'ocean', 'peace', 'queen', 'rival', 'study', 'table',
     'union', 'vivid', 'water', 'xenon', 'yacht', 'zebra', 'abide', 'blend', 'cloud', 'drink',
