@@ -17,6 +17,7 @@ export const player = {
         this.guess = "";
         this.currentCol = 0;
         this.currentRow = 0;
+        this.won = false;
     }
 }
 

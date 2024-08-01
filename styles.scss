@@ -1,3 +1,6 @@
+//Import
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&family=Inter+Tight:wght@400;500&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -15,10 +18,32 @@ body{
             border-bottom: .5px solid $grey;
             padding: 15px;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
             h3{
                 color: white;
                 text-align: center;
                 font-size: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                font-family: "Calistoga", sans-serif;
+                font-weight: 300;
+                text-transform: uppercase;
+                letter-spacing: 5px;;
+                ion-icon{
+                    position: absolute;
+                    top: -10px;
+                    right: -20px;
+                    font-size: 30px;
+                    color: rgb(101, 219, 255);
+                    background: rgba(0,0,0,.3);
+                    transform: rotate(-10deg);
+                    backdrop-filter: blur(5px);
+                    border-radius: 50%;
+                    -webkit-backdrop-filter: blur(5px);
+                }
             }
         }
     }
@@ -90,17 +115,42 @@ body{
         top: 0;
         left: 0;
         z-index: 10;
-        background: rgba(0,0,0,.5);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
+        transition: all .2s ease;
+        pointer-events: none;
         &.hidden{
             display: none;
+            .modal-wrapper{
+                height: 0px;
+                &::after{
+                    opacity: 0;
+                }
+            }
         }
         .modal-wrapper{
+            transition: all .3s ease;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            &::after{
+                position: absolute;
+                content: '';
+                height: 100%;
+                width: 100%;
+                z-index: -1;
+                // background: rgba(0,0,0,.5);
+                // backdrop-filter: blur(5px);
+                // -webkit-backdrop-filter: blur(5px);
+                transition: all .2s ease;
+            }
+        }
+        
+        .modal{
+            transition: all .3s ease;
             position: absolute;
             left: 50%;
             bottom: 50%;
-            transform: translate(-50%, 50%);
+            transform: scaleY(1) translate(-50%, 50%);
             height: 400px;
             width: clamp(320px, 60vw, 500px);
             background: rgba(0,0,0,.8);
@@ -111,6 +161,8 @@ body{
             align-items: center;
             justify-content: space-around;
             flex-direction: column;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             header{
                 text-align: center;
                 font-family: "Inter", sans-serif;
@@ -135,6 +187,7 @@ body{
                 text-transform: uppercase;
                 letter-spacing: 2px;
                 font-weight: 500;
+                pointer-events: auto;
                 &:hover{
                     cursor: pointer;
                 }
@@ -148,12 +201,16 @@ body{
         align-items: center;
         flex-direction: column;
         gap: 5px;
+        padding: 10px;
         section{
             display: flex;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
             gap: 5px;
             div{
-                height: clamp(50px, 10vw, 65px);
-                width: clamp(50px, 10vw, 65px);
+                width: 65px;
+                aspect-ratio: 1 / 1;
                 border: 2px solid $grey;
                 color: white;
                 font-family: "Inter", sans-serif;

@@ -1,4 +1,4 @@
-import { handleInput, mount } from "./scripts/gridViewModel.js";
+import { mount } from "./scripts/gridViewModel.js";
 import { createGrid } from "./scripts/gridView.js";
 import { mountKeyboard } from "./scripts/keyboard.js";
 import { grid } from "./scripts/data.js";

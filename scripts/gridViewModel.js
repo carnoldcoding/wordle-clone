@@ -14,39 +14,51 @@ const getWord = function(){
 
 let word = getWord();
 
-const submitGuess = () =>{    
-    if(player.guess.length == 5 && words.includes(player.guess)){
+const submitGuess = () =>{
+    if(player.guess.length === word.length){
         const guessArr = player.guess.split('');
         const wordArr = word.split('');
         const guessDOM = Array.from(document.querySelectorAll(`.row-${player.currentRow} > div`));
         let correct = 0;
+        
+        //Track Letter Counts
+        let letterCount = {};
+        for(let i = 0 ; i < word.length; i++){
+            let letter = wordArr[i];
+            if(letterCount[letter]){
+                letterCount[letter] += 1;
+            } else{
+                letterCount[letter] = 1;
+            }
+        }
 
-        for(let i = 0; i < 5 ; i++){
-            if(wordArr[i] === guessArr[i]){
+        // Track letter usage in the guess to avoid incorrect "close" marks
+        let usedLetters = {};
+
+        // Evaluate each letter in the guess
+        for (let i = 0; i < word.length; i++) {
+            let guessLetter = guessArr[i];
+            let targetLetter = wordArr[i];
+            console.log(guessLetter, targetLetter);
+            
+            // Correct position
+            if (guessLetter === targetLetter) {
                 guessDOM[i].dataset.eval = 'correct';
                 correct += 1;
-            }else if(wordArr.includes(guessArr[i])){
-                let wordLetterCount = 0;
-                let guessLetterCount = 0;
+                // Reduce the letter count for correct positions
+                letterCount[guessLetter]--;
+                usedLetters[guessLetter] = (usedLetters[guessLetter] || 0) + 1;
+            }
+        }
 
-                wordArr.forEach(letter =>{
-                    if(letter == guessArr[i]){
-                        wordLetterCount += 1;
-                    }
-                })
-
-                guessArr.forEach(letter => {
-                    if(letter == guessArr[i]){
-                        guessLetterCount += 1;
-                    }
-                })
-
-                if(wordLetterCount > guessLetterCount){
-                    guessDOM[i].dataset.eval = 'close';
-                }else{
-                    guessDOM[i].dataset.eval = 'incorrect';
-                }
-            }else{
+        for (let i = 0; i < word.length; i++) {
+            let guessLetter = guessArr[i];
+            if (guessDOM[i].dataset.eval) continue; // Skip already marked letters
+            
+            if (wordArr.includes(guessLetter) && letterCount[guessLetter] > 0) {
+                guessDOM[i].dataset.eval = 'close';
+                letterCount[guessLetter]--; // Use up the letter
+            } else {
                 guessDOM[i].dataset.eval = 'incorrect';
             }
         }
@@ -54,16 +66,15 @@ const submitGuess = () =>{
 
         //Animate
         flipAnimation(guessDOM);
-
         setTimeout(()=>{
             //Ending Conditions
             handleEnd(correct);
 
             //Iterate if not end
             player.nextRow();
-        }, Array.from(guessDOM).length * 250)
+        }, guessDOM.length * 250)
        
-    }else {
+    } else {
         shakeAnimation(document.querySelector(`.row-${player.currentRow}`));
     }
 }
@@ -78,17 +89,17 @@ const toggleModal = function(){
         subtitle.textContent = `You won in ${player.currentRow + 1} guesses!`;
     }else{
         title.textContent = "you lose.";
-        subtitle.textContent = "Better luck next time.";
+        subtitle.textContent = `The word was ${word}`;
     }
     modal.classList.toggle('hidden');
 }
 
 const handleEnd = function(correct){
-    if(correct == 5){
+    if(correct === word.length){
         player.won = true;
         toggleModal();
         unmount();
-    }else if (player.currentRow == 5 && correct != 5){
+    }else if (player.currentRow == 5 && correct != word.length){
         player.won = false;
         toggleModal();
         unmount();
@@ -105,8 +116,12 @@ const replay = function(){
 }
 
 const clearGrid = function(){
-    document.querySelectorAll("section > div").forEach(element =>{
+    const cells = document.querySelectorAll("section > div")
+    
+    cells.forEach(element =>{
+        element.dataset.eval = "";
         Array.from(element.classList).forEach(cls => {
+
             if (cls == "correct" || cls == "dirty" || cls == "close" || cls=="incorrect"){
                 element.classList.remove(cls);
             }
@@ -116,13 +131,14 @@ const clearGrid = function(){
         element.style = "";
         span.style =  "";
     })
+
 }
 
 const placeLetter = function(letter){
     const currentCell = document.querySelector('section > div:not(.dirty)');
     const currentLetter = currentCell.querySelector('span');
     bounceAnimation(currentCell);
-    if(currentCell && player.guess.length < 5){
+    if(currentCell && player.guess.length < word.length){
         player.guess += letter;
         player.currentCol = player.guess.length - 1;
         currentLetter.textContent = letter;
@@ -161,7 +177,7 @@ export const handleInput = (e) =>{
 
 //Mount & Unmount
 export const mount = function(){
-    document.querySelector('.modal-wrapper > button').addEventListener('click', replay);
+    document.querySelector('.modal > button').addEventListener('click', replay);
     window.addEventListener("keyup", handleInput);
     
 }
