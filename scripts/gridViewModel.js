@@ -14,32 +14,24 @@ const submitGuess = () =>{
         const guessDOM = Array.from(document.querySelectorAll(`.row-${player.currentRow} > div`));
         let correct = 0;
         
-        //Track Letter Counts
-        let letterCount = {};
+        //Track Letter Frequency
+        let letterBank = {};
+
         for(let i = 0 ; i < word.length; i++){
             let letter = wordArr[i];
-            if(letterCount[letter]){
-                letterCount[letter] += 1;
-            } else{
-                letterCount[letter] = 1;
-            }
+            letterBank[letter] = letterBank[letter] ? letterBank[letter] + 1 : 1;
         }
 
-        // Track letter usage in the guess to avoid incorrect "close" marks
-        let usedLetters = {};
-
-        // Evaluate each letter in the guess
+        // Run through once for correctness, prevents false "close" marks on UI
         for (let i = 0; i < word.length; i++) {
             let guessLetter = guessArr[i];
             let targetLetter = wordArr[i];
             
-            // Correct position
             if (guessLetter === targetLetter) {
                 guessDOM[i].dataset.eval = 'correct';
                 correct += 1;
-                // Reduce the letter count for correct positions
-                letterCount[guessLetter]--;
-                usedLetters[guessLetter] = (usedLetters[guessLetter] || 0) + 1;
+                // Reduce the letter count for correct positions, letterBank serves also as remaining letter count
+                letterBank[guessLetter]--;
             }
         }
 
@@ -47,11 +39,12 @@ const submitGuess = () =>{
             let guessLetter = guessArr[i];
             if (guessDOM[i].dataset.eval) continue; // Skip already marked letters
             
-            if (wordArr.includes(guessLetter) && letterCount[guessLetter] > 0) {
+            //If the letter is in the word, and there is at least one more of that letter
+            if (wordArr.includes(guessLetter) && letterBank[guessLetter] > 0) {
                 guessDOM[i].dataset.eval = 'close';
-                letterCount[guessLetter]--; // Use up the letter
+                letterBank[guessLetter]--; // Spend the letter
             } else {
-                guessDOM[i].dataset.eval = 'incorrect';
+                guessDOM[i].dataset.eval = 'incorrect'; //If the letter is not in the word, or there is not at least one more of the letter
             }
         }
         colorKeys();
