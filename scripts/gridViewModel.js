@@ -103,7 +103,7 @@ const handleEnd = function(correct){
         player.won = true;
         toggleModal();
         unmount();
-    }else if (player.currentRow == 5 && correct != word.length){
+    }else if (player.currentRow == grid.rows - 1 && correct != word.length){
         player.won = false;
         toggleModal();
         unmount();
