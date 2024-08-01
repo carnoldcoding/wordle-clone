@@ -1,5 +1,6 @@
-const createKeyboard = () => {
+export const createKeyboard = () => {
     const container = document.querySelector('aside');
+    container.innerHTML = '';
     const qwerty = [Array.from('qwertyuiop'),Array.from('asdfghjkl'),['ent', 'z','x','c', 'v', 'b', 'n', 'm', 'del']];
     let keyboardHTML = '';
     
@@ -34,17 +35,6 @@ export const colorKeys = () =>{
             key.classList.add(keyColorMap[key.textContent]);
         }
     });
-}
-
-export const clearKeys = () =>{
-    const keys = document.querySelectorAll('aside > div > section');
-    keys.forEach(key => {
-        Array.from(key.classList).forEach(cls => {
-            if (cls == "correct" || cls == "close" || cls=="incorrect"){
-                key.classList.remove(cls);
-            }
-        })
-    })
 }
 
 export const mountKeyboard = () =>{

@@ -1,20 +1,13 @@
-import { player } from "./data.js";
+import { player, grid } from "./data.js";
 import { isValid } from "./utils.js";
-import { words } from "./data.js";
-import { getRandomInt } from "./utils.js";
-import { flipAnimation, shakeAnimation, bounceAnimation} from "./animations.js";
-import { colorKeys, clearKeys } from "./keyboard.js";
-
-
-const getWord = function(){
-    const newWord = words[getRandomInt(words.length)];
-    console.log(newWord);
-    return newWord
-}
-
-let word = getWord();
+import { flipAnimation, gearAnimation, shakeAnimation, bounceAnimation} from "./animations.js";
+import { colorKeys } from "./keyboard.js";
+import { createGrid } from "./gridView.js";
+import { getWord } from "./wordAPI.js";
+import { mountKeyboard, createKeyboard } from "./keyboard.js";
 
 const submitGuess = () =>{
+    const word = grid.word;
     if(player.guess.length === word.length){
         const guessArr = player.guess.split('');
         const wordArr = word.split('');
@@ -39,7 +32,6 @@ const submitGuess = () =>{
         for (let i = 0; i < word.length; i++) {
             let guessLetter = guessArr[i];
             let targetLetter = wordArr[i];
-            console.log(guessLetter, targetLetter);
             
             // Correct position
             if (guessLetter === targetLetter) {
@@ -66,13 +58,15 @@ const submitGuess = () =>{
 
         //Animate
         flipAnimation(guessDOM);
+
         setTimeout(()=>{
             //Ending Conditions
             handleEnd(correct);
 
             //Iterate if not end
             player.nextRow();
-        }, guessDOM.length * 250)
+        }, guessDOM.length * 200);
+       
        
     } else {
         shakeAnimation(document.querySelector(`.row-${player.currentRow}`));
@@ -81,6 +75,8 @@ const submitGuess = () =>{
 
 
 const toggleModal = function(){
+    const word = grid.word;
+
     const modal = document.querySelector('.modal-container');
     const title = modal.querySelector('header > h1');
     const subtitle = modal.querySelector('header > h3');
@@ -91,10 +87,18 @@ const toggleModal = function(){
         title.textContent = "you lose.";
         subtitle.textContent = `The word was ${word}`;
     }
-    modal.classList.toggle('hidden');
+
+
+    if(Array.from(modal.classList).includes('hidden')){
+        modal.classList.remove('hidden');
+    }else{
+        modal.classList.add('hidden');
+    }
 }
 
 const handleEnd = function(correct){
+    const word = grid.word;
+
     if(correct === word.length){
         player.won = true;
         toggleModal();
@@ -106,35 +110,23 @@ const handleEnd = function(correct){
     }
 }
 
-const replay = function(){
+export const initGame = async () =>{
+    //Game
+    grid.word = await getWord(grid.cols);
     player.reset();
-    toggleModal();
+
+    //Create
+    createGrid(grid.rows, grid.cols);
+    createKeyboard();
+
+    //Mount
     mount();
-    clearGrid();
-    clearKeys();
-    word = getWord();
-}
-
-const clearGrid = function(){
-    const cells = document.querySelectorAll("section > div")
-    
-    cells.forEach(element =>{
-        element.dataset.eval = "";
-        Array.from(element.classList).forEach(cls => {
-
-            if (cls == "correct" || cls == "dirty" || cls == "close" || cls=="incorrect"){
-                element.classList.remove(cls);
-            }
-        })
-        const span = element.querySelector('span');
-        span.textContent = "";
-        element.style = "";
-        span.style =  "";
-    })
-
+    mountKeyboard();
 }
 
 const placeLetter = function(letter){
+    const word = grid.word;
+
     const currentCell = document.querySelector('section > div:not(.dirty)');
     const currentLetter = currentCell.querySelector('span');
     bounceAnimation(currentCell);
@@ -160,6 +152,7 @@ const removeLetter = () =>{
 
 
 
+
 //Handle Input Logic
 export const handleInput = (e) =>{
     let value = e.key.toLowerCase();
@@ -177,10 +170,51 @@ export const handleInput = (e) =>{
 
 //Mount & Unmount
 export const mount = function(){
-    document.querySelector('.modal > button').addEventListener('click', replay);
     window.addEventListener("keyup", handleInput);
     
 }
 const unmount = function(){
     window.removeEventListener('keyup', handleInput);
 }
+
+const toggleSettings = function(){
+    const settingsDOM = document.querySelector('.settings-menu');
+    if(Array.from(settingsDOM.classList).includes('closed')){
+        settingsDOM.classList.remove('closed');
+    }else{
+        settingsDOM.classList.add('closed');
+    }
+}
+
+
+//Mount Modal Button
+document.querySelector('.modal > .button').addEventListener('click', ()=>{
+    initGame();
+    toggleModal();
+});
+
+//Attach Settings Event Listener
+const settingsDOM = document.querySelector('.settings-menu');
+const settingsButtonDOM = document.querySelector('.settings > ion-icon');
+const newGameDOM = settingsDOM.querySelector('.button');
+const wordSliderDOM = settingsDOM.querySelector('input[name="word-length"]');
+const guessSliderDOM = settingsDOM.querySelector('input[name="guess-count"]');
+settingsButtonDOM.addEventListener('click', ()=>{
+    gearAnimation(settingsButtonDOM);
+    toggleSettings();
+})
+
+newGameDOM.addEventListener('click', ()=>{
+    toggleSettings();
+    initGame();
+});
+
+wordSliderDOM.addEventListener("input",(e)=>{
+    wordSliderDOM.nextElementSibling.textContent = e.target.value;
+    grid.cols = e.target.value;
+})
+
+guessSliderDOM.addEventListener("input", (e)=>{
+    guessSliderDOM.nextElementSibling.textContent = e.target.value;
+    grid.rows = e.target.value;
+})

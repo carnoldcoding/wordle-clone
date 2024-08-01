@@ -7,6 +7,10 @@ export const bounceAnimation = function(element){
     }, 100);
   }
 
+
+export const gearAnimation = function(element){
+    element.classList.toggle('open');
+}
 export const flipAnimation = function(elementList){
 
   elementList.forEach((element, index) =>{

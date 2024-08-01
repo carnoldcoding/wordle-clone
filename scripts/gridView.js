@@ -1,5 +1,6 @@
 export const createGrid = (rows, cols) => {
     const container = document.querySelector('article');
+    container.innerHTML = '';
     let gridHTML = '';
 
     for(let i = 0; i < rows; i++){

@@ -1,6 +1,7 @@
 export const grid = {
     rows: 6,
-    cols: 5
+    cols: 5,
+    word: ''
 }
 
 export const player = {

@@ -9,6 +9,26 @@
 body {
   background: #111;
 }
+body header {
+  position: relative;
+  z-index: 10;
+}
+body header .settings {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 30px;
+}
+body header .settings ion-icon {
+  color: white;
+  transition: all 0.2s ease;
+}
+body header .settings ion-icon.open {
+  transform: rotate(360deg);
+}
+body header .settings ion-icon:hover {
+  cursor: pointer;
+}
 body header nav {
   width: 100%;
   border-bottom: 0.5px solid #444;
@@ -16,6 +36,8 @@ body header nav {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
+  overflow: hidden;
+  background: #111;
 }
 body header nav h3 {
   color: white;
@@ -99,6 +121,91 @@ body .keyboard-container .keyboard .row section.enter {
 body .keyboard-container .keyboard .row section.backspace {
   font-size: clamp(15px, 5vw, 25px);
 }
+body .settings-menu {
+  padding-top: 2px;
+  position: absolute;
+  right: 20px;
+  top: 70px;
+  z-index: 1;
+  height: 500px;
+  width: 300px;
+  border: 0.5px solid #444;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  transition: all 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+body .settings-menu .button {
+  font-family: "inter", sans-serif;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  font-size: 15px;
+  padding: 15px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  pointer-events: auto;
+  align-self: center;
+  margin: 20px;
+}
+body .settings-menu .button:hover {
+  cursor: pointer;
+}
+body .settings-menu.closed {
+  height: 0px;
+  padding: 0px;
+}
+body .settings-menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  user-select: none;
+  margin: 20px;
+}
+body .settings-menu ul li {
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.315);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+body .settings-menu ul li h4 {
+  font-weight: 300;
+  font-family: "inter", sans-serif;
+}
+body .settings-menu ul li div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+body .settings-menu ul li #slider {
+  -webkit-appearance: none; /* For Chrome, Safari, and Opera */
+  -moz-appearance: none; /* For Firefox */
+  appearance: none;
+  width: 100%;
+  height: 7px; /* Default height for the track */
+  background: transparent; /* Default background color for the track */
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  outline: none; /* Remove outline */
+  opacity: 0.9; /* Set opacity */
+  transition: opacity 0.15s ease-in-out; /* Smooth transition */
+}
+body .settings-menu ul li #slider::-moz-range-thumb {
+  -webkit-appearance: none; /* For Chrome, Safari, and Opera */
+  -moz-appearance: none; /* For Firefox */
+  appearance: none;
+  background: pink;
+}
 body .modal-container {
   height: 100%;
   width: 100%;
@@ -108,9 +215,6 @@ body .modal-container {
   z-index: 10;
   transition: all 0.2s ease;
   pointer-events: none;
-}
-body .modal-container.hidden {
-  display: none;
 }
 body .modal-container.hidden .modal-wrapper {
   height: 0px;
@@ -166,7 +270,8 @@ body .modal-container .modal header h3 {
   color: rgb(201, 201, 201);
   font-weight: 300;
 }
-body .modal-container .modal button {
+body .modal-container .modal .button {
+  font-family: "inter", sans-serif;
   border: 1px solid white;
   background: transparent;
   color: white;
@@ -178,7 +283,7 @@ body .modal-container .modal button {
   font-weight: 500;
   pointer-events: auto;
 }
-body .modal-container .modal button:hover {
+body .modal-container .modal .button:hover {
   cursor: pointer;
 }
 body .wordle-container {

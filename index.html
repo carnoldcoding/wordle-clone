@@ -10,8 +10,30 @@
     <header>
         <nav>
             <h3>Wordle<ion-icon name="add-circle-outline"></ion-icon></h3>
+            <div class="settings">
+                <ion-icon name="settings-outline"></ion-icon>
+            </div>
         </nav>
     </header>
+    <div class="settings-menu closed">
+        <ul>
+            <li>
+                <h4>Word Length</h4>
+                <div>
+                    <input type="range" id="slider" name="word-length" min="2" max="10" value="5">
+                    <p>5</p>
+                </div>
+            </li>
+            <li>
+                <h4>Guess Count</h4>
+                <div>
+                    <input type="range" id="slider" name="guess-count" min="2" max="10" value="5">
+                    <p>5</p>
+                </div>
+            </li>
+        </ul>
+        <div class="button">New Game</div>
+    </div>
     <div class="modal-container hidden">
         <div class="modal-wrapper">
             <div class="modal">
@@ -19,7 +41,7 @@
                     <h1></h1>
                     <h3></h3>
                 </header>
-                <button>Play Again</button>
+                <div class="button">Play Again</div>
             </div>
         </div>
     </div>
@@ -34,7 +56,6 @@
     </article>
     <article class="keyboard-container">
         <aside class="keyboard">
-
         </aside>
     </article>
 </body>
